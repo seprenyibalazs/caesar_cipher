@@ -2,24 +2,35 @@ alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v' 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v' 'w', 'x', 'y', 'z']
 
-direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-text = input("Type yout message: \n").lower()
-shift = int(input("Type the shift number: \n"))
-
 
 def ceasar(plain_text, shift_amount, ceasar_direction):
     end_text = ""
     if ceasar_direction == "decode":
         shift_amount = shift_amount * -1
     for letter in plain_text:
-        position = alphabet.index(letter)
-        new_position = position + shift_amount
-        new_letter = alphabet[new_position]
-        end_text += new_letter
+        if letter in alphabet:
+            position = alphabet.index(letter)
+            new_position = position + shift_amount
+            new_letter = alphabet[new_position]
+            end_text += new_letter
+        else:
+            end_text += letter
     print(f"The {ceasar_direction} text is {end_text}")
 
 
-ceasar(plain_text=text, shift_amount=shift, ceasar_direction=direction)
+should_continue = True
+while should_continue:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type yout message: \n").lower()
+    shift = int(input("Type the shift number: \n"))
+    shift = shift % 26
+
+    ceasar(plain_text=text, shift_amount=shift, ceasar_direction=direction)
+    keep_going = input(
+        "Typ 'yes' if you want to go again. Otherwise type 'no'.\n")
+    if keep_going == "no":
+        should_continue = False
+        print("Goodebye")
 
 """
 def encrypt(plain_text, shift_amount):
